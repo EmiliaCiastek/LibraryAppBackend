@@ -13,13 +13,12 @@ import org.springframework.web.bind.annotation.RestController
 class AuthorsController @Autowired constructor(private val authorRepository: AuthorRepository) {
 
     @RequestMapping(method = [RequestMethod.GET])
-    fun getAllAuthors() : List<Author> =
+    fun getAllAuthors(): List<Author> =
             authorRepository.getAllAuthors()
 
     @RequestMapping(method = [RequestMethod.POST])
-    fun addAuthor(@RequestBody author: Author): Author {
-        authorRepository.addAuthor(author)
-
-        return author
-    }
+    fun addAuthor(@RequestBody author: Author): Author =
+            author.apply {
+                id = authorRepository.addAuthor(author)
+            }
 }

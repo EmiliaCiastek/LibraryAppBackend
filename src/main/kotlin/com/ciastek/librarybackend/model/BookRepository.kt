@@ -4,5 +4,7 @@ interface BookRepository {
 
     fun getAllBooks(): List<Book>
 
-    fun addBook(book: Book)
+    fun addBook(book: Book): Long
+
+    fun getAllBooksByAuthorId(authorId: Long): List<Book>
 }
