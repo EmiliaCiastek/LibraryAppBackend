@@ -7,4 +7,6 @@ interface BookRepository {
     fun addBook(book: Book): Long
 
     fun getAllBooksByAuthorId(authorId: Long): List<Book>
+
+    fun findBooksByTitle(title: String): List<Book>
 }

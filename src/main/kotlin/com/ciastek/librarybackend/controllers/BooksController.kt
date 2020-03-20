@@ -22,4 +22,8 @@ class BooksController @Autowired constructor(private val bookRepository: BookRep
             book.apply {
                 id = bookRepository.addBook(book)
             }
+
+    @RequestMapping("/{title}", method = [RequestMethod.GET])
+    fun getBooksByTitle(@PathVariable("title") title: String): List<Book> =
+        bookRepository.findBooksByTitle(title)
 }

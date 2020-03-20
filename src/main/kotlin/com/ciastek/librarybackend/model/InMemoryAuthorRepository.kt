@@ -10,7 +10,8 @@ class InMemoryAuthorRepository : AuthorRepository {
                 Author("Svetlana", "Isakova", 0),
                 Author("John Ferguson", "Smart", 1),
                 Author("Robert C.", "Martin", 2),
-                Author("Tess", "Gerritsen", 3)
+                Author("Tess", "Gerritsen", 3),
+                Author("Robyn", "Harding", 4)
         )
     }
 
@@ -20,5 +21,23 @@ class InMemoryAuthorRepository : AuthorRepository {
         authors.add(author)
 
         return authors.indexOf(author).toLong()
+    }
+
+    override fun findAuthors(name: String?, lastName: String?): List<Author> {
+        return authors
+                .filter { author ->
+                    if (name != null) {
+                        author.name.toLowerCase().contains(name.toLowerCase())
+                    } else {
+                        true
+                    }
+                }
+                .filter { author ->
+                    if (lastName != null) {
+                        author.lastName.toLowerCase().contains(lastName.toLowerCase())
+                    } else {
+                        true
+                    }
+                }
     }
 }

@@ -26,4 +26,11 @@ class InMemoryBookRepository : BookRepository {
     override fun getAllBooksByAuthorId(authorId: Long): List<Book> =
             books.filter { it.authorId == authorId }
                     .toList()
+
+    override fun findBooksByTitle(title: String): List<Book> =
+        books.filter {
+            it.title.toLowerCase()
+                    .contains(title.toLowerCase())
+        }
+                .toList()
 }
