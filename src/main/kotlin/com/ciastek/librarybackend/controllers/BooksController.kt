@@ -38,7 +38,7 @@ class BooksController @Autowired constructor(private val bookRepository: BookRep
 
     private fun BookEntity.mapToViewModel(): Book {
         val author = authorRepository.getAuthor(authorId)
-        val authorName = if (author != null) author.name + author.lastName else ""
+        val authorName = if (author != null) "${author.name} ${author.lastName}" else ""
 
         return Book(id = id, title = title, author = authorName, authorId = authorId)
     }
