@@ -1,7 +1,8 @@
 package com.ciastek.librarybackend.controllers
 
 import com.ciastek.librarybackend.model.Author
-import com.ciastek.librarybackend.model.AuthorRepository
+import com.ciastek.librarybackend.database.AuthorRepository
+import com.ciastek.librarybackend.database.entity.Author as AuthorEntity
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
@@ -12,16 +13,22 @@ class AuthorsController @Autowired constructor(private val authorRepository: Aut
     @RequestMapping(method = [RequestMethod.GET])
     fun getAllAuthors(@RequestParam(required = false) name: String?,
                       @RequestParam(required = false) lastName: String?): List<Author> =
-        if(name == null && lastName == null) {
-            authorRepository.getAllAuthors()
-        } else {
-            authorRepository.findAuthors(name, lastName)
-        }
+            if (name == null && lastName == null) {
+                authorRepository.getAllAuthors()
+            } else {
+                authorRepository.findAuthors(name, lastName)
+            }.map { it.mapToViewModel() }
 
 
     @RequestMapping(method = [RequestMethod.POST])
     fun addAuthor(@RequestBody author: Author): Author =
             author.apply {
-                id = authorRepository.addAuthor(author)
+                id = authorRepository.addAuthor(author.mapToEntity())
             }
+
+    private fun Author.mapToEntity() =
+            AuthorEntity(id = id, name = name, lastName = lastName)
+
+    private fun AuthorEntity.mapToViewModel() =
+            Author(id = id, name = name, lastName = lastName)
 }

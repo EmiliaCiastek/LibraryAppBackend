@@ -1,5 +1,6 @@
-package com.ciastek.librarybackend.model
+package com.ciastek.librarybackend.database
 
+import com.ciastek.librarybackend.database.entity.Book
 import org.springframework.stereotype.Repository
 
 @Repository
@@ -7,11 +8,11 @@ class InMemoryBookRepository : BookRepository {
 
     private val books by lazy {
         mutableListOf(
-                Book("Kotlin in Action", 0, 0),
-                Book("Bdd in action", 1, 1),
-                Book("Clean code", 2, 2),
-                Book("Gravity", 3, 3),
-                Book("Clean Coder", 2, 4)
+                Book(title = "Kotlin in Action", authorId = 0, id = 0),
+                Book(title = "Bdd in action", authorId = 1, id = 1),
+                Book(title = "Clean code", authorId = 2, id = 2),
+                Book(title = "Gravity", authorId = 3, id = 3),
+                Book(title = "Clean Coder", authorId = 2, id = 4)
         )
     }
 

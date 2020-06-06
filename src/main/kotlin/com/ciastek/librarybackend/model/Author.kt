@@ -1,3 +1,3 @@
 package com.ciastek.librarybackend.model
 
-data class Author (val name: String, val lastName: String, var id: Long?)
+data class Author (var id: Long?, val name: String, val lastName: String)

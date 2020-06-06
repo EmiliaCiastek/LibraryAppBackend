@@ -1,3 +1,3 @@
 package com.ciastek.librarybackend.model
 
-data class Book (val title: String, val authorId: Long, var id: Long? )
+data class Book (var id: Long?, val title: String, val author: String, val authorId: Long)

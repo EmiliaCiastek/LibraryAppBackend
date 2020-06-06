@@ -1,4 +1,7 @@
-package com.ciastek.librarybackend.model
+package com.ciastek.librarybackend.database
+
+import com.ciastek.librarybackend.database.entity.Book
+
 
 interface BookRepository {
 

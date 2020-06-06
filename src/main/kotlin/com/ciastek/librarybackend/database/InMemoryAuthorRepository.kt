@@ -1,17 +1,18 @@
-package com.ciastek.librarybackend.model
+package com.ciastek.librarybackend.database
 
+import com.ciastek.librarybackend.database.entity.Author
 import org.springframework.stereotype.Repository
 
 @Repository
 class InMemoryAuthorRepository : AuthorRepository {
 
-    val authors by lazy {
+    private val authors by lazy {
         mutableListOf(
-                Author("Svetlana", "Isakova", 0),
-                Author("John Ferguson", "Smart", 1),
-                Author("Robert C.", "Martin", 2),
-                Author("Tess", "Gerritsen", 3),
-                Author("Robyn", "Harding", 4)
+                Author(name = "Svetlana", lastName = "Isakova", id = 0),
+                Author(name = "John Ferguson", lastName = "Smart", id = 1),
+                Author(name = "Robert C.", lastName = "Martin", id = 2),
+                Author(name = "Tess", lastName = "Gerritsen", id = 3),
+                Author(name = "Robyn", lastName = "Harding", id = 4)
         )
     }
 
@@ -39,5 +40,9 @@ class InMemoryAuthorRepository : AuthorRepository {
                         true
                     }
                 }
+    }
+
+    override fun getAuthor(id: Long): Author? {
+        return authors.find { it.id == id }
     }
 }
