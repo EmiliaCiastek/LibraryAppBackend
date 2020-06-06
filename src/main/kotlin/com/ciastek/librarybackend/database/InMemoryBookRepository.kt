@@ -17,6 +17,7 @@ class InMemoryBookRepository : BookRepository {
     }
 
     override fun getAllBooks(): List<Book> = books.toList()
+            .sort()
 
     override fun addBook(book: Book): Long {
         books.add(book)
@@ -27,6 +28,7 @@ class InMemoryBookRepository : BookRepository {
     override fun getAllBooksByAuthorId(authorId: Long): List<Book> =
             books.filter { it.authorId == authorId }
                     .toList()
+                    .sort()
 
     override fun findBooksByTitle(title: String): List<Book> =
         books.filter {
@@ -34,4 +36,8 @@ class InMemoryBookRepository : BookRepository {
                     .contains(title.toLowerCase())
         }
                 .toList()
+                .sort()
+
+    private fun List<Book>.sort() =
+            sortedBy { it.title }
 }

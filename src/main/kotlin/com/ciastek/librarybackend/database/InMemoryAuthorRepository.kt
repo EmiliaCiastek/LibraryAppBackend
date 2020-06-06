@@ -16,7 +16,7 @@ class InMemoryAuthorRepository : AuthorRepository {
         )
     }
 
-    override fun getAllAuthors(): List<Author> = authors.toList()
+    override fun getAllAuthors(): List<Author> = authors.toList().sort()
 
     override fun addAuthor(author: Author): Long {
         authors.add(author)
@@ -40,9 +40,13 @@ class InMemoryAuthorRepository : AuthorRepository {
                         true
                     }
                 }
+                .sort()
     }
 
     override fun getAuthor(id: Long): Author? {
         return authors.find { it.id == id }
     }
+
+    private fun List<Author>.sort() =
+            sortedWith(compareBy({ it.lastName }, { it.name }))
 }

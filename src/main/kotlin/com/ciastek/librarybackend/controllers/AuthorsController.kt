@@ -2,13 +2,14 @@ package com.ciastek.librarybackend.controllers
 
 import com.ciastek.librarybackend.model.Author
 import com.ciastek.librarybackend.database.AuthorRepository
+import com.ciastek.librarybackend.database.BookRepository
 import com.ciastek.librarybackend.database.entity.Author as AuthorEntity
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/authors")
-class AuthorsController @Autowired constructor(private val authorRepository: AuthorRepository) {
+class AuthorsController @Autowired constructor(private val authorRepository: AuthorRepository, private val bookRepository: BookRepository) {
 
     @RequestMapping(method = [RequestMethod.GET])
     fun getAllAuthors(@RequestParam(required = false) name: String?,
@@ -30,5 +31,5 @@ class AuthorsController @Autowired constructor(private val authorRepository: Aut
             AuthorEntity(id = id, name = name, lastName = lastName)
 
     private fun AuthorEntity.mapToViewModel() =
-            Author(id = id, name = name, lastName = lastName)
+            Author(id = id, name = name, lastName = lastName, numberOfBooks = bookRepository.getAllBooksByAuthorId(id!!).size)
 }
