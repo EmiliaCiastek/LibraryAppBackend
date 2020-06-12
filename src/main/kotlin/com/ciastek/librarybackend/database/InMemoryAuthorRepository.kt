@@ -12,7 +12,8 @@ class InMemoryAuthorRepository : AuthorRepository {
                 Author(name = "John Ferguson", lastName = "Smart", id = 1),
                 Author(name = "Robert C.", lastName = "Martin", id = 2),
                 Author(name = "Tess", lastName = "Gerritsen", id = 3),
-                Author(name = "Robyn", lastName = "Harding", id = 4)
+                Author(name = "Robyn", lastName = "Harding", id = 4),
+                Author(name = "John Ronald Reuel", lastName = "Tolkien", id = 5, birthDate = "03-01-1892", deathDate = "02-09-1973", website = "http://www.tolkienestate.com/", genres = "Fantasy, Fiction, Children's", photoUrl = "https://i.wpimg.pl/O/464x660/d.wpimg.pl/822554738--93831743/j-r-r-tolkien-tolkien.jpg", description = tolkienDesc)
         )
     }
 
@@ -49,4 +50,6 @@ class InMemoryAuthorRepository : AuthorRepository {
 
     private fun List<Author>.sort() =
             sortedWith(compareBy({ it.lastName }, { it.name }))
+
+    private val tolkienDesc = "John Ronald Reuel Tolkien, CBE was an English writer, poet, WWI veteran, philologist, and university professor, best known as the author of the high fantasy classic works The Hobbit and The Lord of the Rings."
 }

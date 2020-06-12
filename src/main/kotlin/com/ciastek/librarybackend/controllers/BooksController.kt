@@ -1,9 +1,10 @@
 package com.ciastek.librarybackend.controllers
 
 import com.ciastek.librarybackend.database.AuthorRepository
-import com.ciastek.librarybackend.model.Book
-import  com.ciastek.librarybackend.database.entity.Book as BookEntity
 import com.ciastek.librarybackend.database.BookRepository
+import com.ciastek.librarybackend.mapToEntity
+import com.ciastek.librarybackend.mapToViewModel
+import com.ciastek.librarybackend.model.Book
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
@@ -19,7 +20,7 @@ class BooksController @Autowired constructor(private val bookRepository: BookRep
                 bookRepository.getAllBooks()
             }
                     .map {
-                       it.mapToViewModel()
+                       it.mapToViewModel(authorRepository.getAuthor(it.authorId))
                     }
 
     @RequestMapping(method = [RequestMethod.POST])
@@ -32,17 +33,7 @@ class BooksController @Autowired constructor(private val bookRepository: BookRep
     fun getBooksByTitle(@PathVariable("title") title: String): List<Book> =
             bookRepository.findBooksByTitle(title)
                     .map {
-                        it.mapToViewModel()
+                        it.mapToViewModel(authorRepository.getAuthor(it.authorId))
                     }
 
-
-    private fun BookEntity.mapToViewModel(): Book {
-        val author = authorRepository.getAuthor(authorId)
-        val authorName = if (author != null) "${author.name} ${author.lastName}" else ""
-
-        return Book(id = id, title = title, author = authorName, authorId = authorId)
-    }
-
-    private fun Book.mapToEntity() =
-            com.ciastek.librarybackend.database.entity.Book(id = id, title = title, authorId = authorId)
 }

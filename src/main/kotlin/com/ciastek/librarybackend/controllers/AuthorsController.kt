@@ -3,7 +3,10 @@ package com.ciastek.librarybackend.controllers
 import com.ciastek.librarybackend.model.Author
 import com.ciastek.librarybackend.database.AuthorRepository
 import com.ciastek.librarybackend.database.BookRepository
-import com.ciastek.librarybackend.database.entity.Author as AuthorEntity
+import com.ciastek.librarybackend.mapToDetailedViewModel
+import com.ciastek.librarybackend.mapToEntity
+import com.ciastek.librarybackend.mapToViewModel
+import com.ciastek.librarybackend.model.DetailedAuthor
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
@@ -18,7 +21,7 @@ class AuthorsController @Autowired constructor(private val authorRepository: Aut
                 authorRepository.getAllAuthors()
             } else {
                 authorRepository.findAuthors(name, lastName)
-            }.map { it.mapToViewModel() }
+            }.map { it.mapToViewModel(bookRepository.getAllBooksByAuthorId(it.id!!).size) }
 
 
     @RequestMapping(method = [RequestMethod.POST])
@@ -27,9 +30,13 @@ class AuthorsController @Autowired constructor(private val authorRepository: Aut
                 id = authorRepository.addAuthor(author.mapToEntity())
             }
 
-    private fun Author.mapToEntity() =
-            AuthorEntity(id = id, name = name, lastName = lastName)
+    @RequestMapping( "/{id}", method = [RequestMethod.GET])
+    fun getAuthor(@PathVariable("id") id: Long): DetailedAuthor {
+        val author = authorRepository.getAuthor(id)
 
-    private fun AuthorEntity.mapToViewModel() =
-            Author(id = id, name = name, lastName = lastName, numberOfBooks = bookRepository.getAllBooksByAuthorId(id!!).size)
+        val books = bookRepository.getAllBooksByAuthorId(id)
+                .map { it.mapToViewModel(author) }
+
+        return author.mapToDetailedViewModel(books)
+    }
 }
