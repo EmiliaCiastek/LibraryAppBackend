@@ -2,6 +2,17 @@
 
 ## Here will be application description
 
+##To create a database: 
+1. Add application.properties file in src/main/resources/application.properties
+2. In application properties add database config, for example: 
+
+```
+spring.datasource.url=jdbc:postgresql://localhost:5432/library 
+spring.datasource.username=postgres 
+spring.datasource.password=password 
+spring.jpa.hibernate.ddl-auto=update
+```
+
 ## To start server on localhost: 
 - On Mac or Linux:
 `./gradlew bootRun`
