@@ -1,15 +1,20 @@
 package com.ciastek.librarybackend.database
 
 import com.ciastek.librarybackend.database.entity.Book
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
+import org.springframework.stereotype.Repository
 
 
-interface BookRepository {
+@Repository
+interface BookRepository: JpaRepository<Book, Long> {
 
-    fun getAllBooks(): List<Book>
+    @Query("FROM books ORDER BY title")
+    fun getAll(): List<Book>
 
-    fun addBook(book: Book): Long
+    fun save(book: Book): Long
 
-    fun getAllBooksByAuthorId(authorId: Long): List<Book>
+    fun getAllByAuthorId(authorId: Long): List<Book>
 
-    fun findBooksByTitle(title: String): List<Book>
+    fun getAllByTitleContains(title: String): List<Book>
 }

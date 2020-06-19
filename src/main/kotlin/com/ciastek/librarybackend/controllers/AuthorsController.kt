@@ -15,26 +15,22 @@ import org.springframework.web.bind.annotation.*
 class AuthorsController @Autowired constructor(private val authorRepository: AuthorRepository, private val bookRepository: BookRepository) {
 
     @RequestMapping(method = [RequestMethod.GET])
-    fun getAllAuthors(@RequestParam(required = false) name: String?,
-                      @RequestParam(required = false) lastName: String?): List<Author> =
-            if (name == null && lastName == null) {
+    fun getAllAuthors(): List<Author> =
                 authorRepository.getAllAuthors()
-            } else {
-                authorRepository.findAuthors(name, lastName)
-            }.map { it.mapToViewModel(bookRepository.getAllBooksByAuthorId(it.id!!).size) }
+                        .map { it.mapToViewModel(bookRepository.getAllByAuthorId(it.id!!).size) }
 
 
     @RequestMapping(method = [RequestMethod.POST])
     fun addAuthor(@RequestBody author: Author): Author =
             author.apply {
-                id = authorRepository.addAuthor(author.mapToEntity())
+                id = authorRepository.save(author.mapToEntity())
             }
 
     @RequestMapping( "/{id}", method = [RequestMethod.GET])
     fun getAuthor(@PathVariable("id") id: Long): DetailedAuthor {
-        val author = authorRepository.getAuthor(id)
+        val author = authorRepository.getAuthorById(id)
 
-        val books = bookRepository.getAllBooksByAuthorId(id)
+        val books = bookRepository.getAllByAuthorId(id)
                 .map { it.mapToViewModel(author) }
 
         return author.mapToDetailedViewModel(books)
