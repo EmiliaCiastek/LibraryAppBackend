@@ -4,6 +4,7 @@ import com.ciastek.librarybackend.database.entity.Author as AuthorEntity
 import com.ciastek.librarybackend.model.Author
 import com.ciastek.librarybackend.model.Book
 import com.ciastek.librarybackend.model.DetailedAuthor
+import com.ciastek.librarybackend.model.DetailedBook
 import  com.ciastek.librarybackend.database.entity.Book as BookEntity
 
 
@@ -11,6 +12,12 @@ internal fun BookEntity.mapToViewModel(author: AuthorEntity?): Book {
     val authorName = if (author != null) "${author.name} ${author.lastName}" else ""
 
     return Book(id = id, title = title, author = authorName, authorId = authorId)
+}
+
+internal fun BookEntity.mapToDetailedViewModel(author: AuthorEntity?): DetailedBook {
+    val authorName = if (author != null) "${author.name} ${author.lastName}" else ""
+
+    return DetailedBook(id = id, title = title, author = authorName, rating = rating ?: 0.0, coverUrl = coverUrl ?: "", description = description ?: "")
 }
 
 internal fun Book.mapToEntity() =

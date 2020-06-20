@@ -7,7 +7,7 @@ import javax.persistence.Id
 
 @Entity(name = "authors")
 class Author(@Id @GeneratedValue(strategy = GenerationType.AUTO)
-             val id: Long? = 0L,
+             val id: Long? = -1L,
              val name: String = "",
              val lastName: String= "",
              val birthDate: String = "",

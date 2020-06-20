@@ -1,10 +1,11 @@
-insert into books (id, title, author_id)
+insert into books (id, title, author_id, rating, cover_url, description)
 values
-                (0, 'Kotlin in Action', 0),
-                (1, 'Bdd in action', 1),
-                (2, 'Clean code', 2),
-                (3, 'Gravity', 3),
-                (4, 'Clean Coder', 2);
+                (0, 'Kotlin in Action', 0, 0.0, '', ''),
+                (1, 'Bdd in action', 1,  0.0, '', ''),
+                (2, 'Clean code', 2,  0.0, '', ''),
+                (3, 'Gravity', 3,  0.0, '', ''),
+                (4, 'Clean Coder', 2,  0.0, '', ''),
+                (5, 'The party', 4,  3.5, 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1497173835l/35405445._SY475_.jpg', 'One invitation. A lifetime of regrets. /nSweet sixteen. It’s an exciting coming of age, a milestone, and a rite of passage. Jeff and Kim Sanders plan on throwing a party for their daughter, Hannah—a sweet girl with good grades and nice friends. Rather than an extravagant, indulgent affair, they invite four girls over for pizza, cake, movies, and a sleepover. What could possibly go wrong?');
 
 insert into authors (id, name, last_name, birth_date, death_date, website, genres, photo_url, description)
 values

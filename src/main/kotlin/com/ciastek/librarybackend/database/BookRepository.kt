@@ -12,6 +12,8 @@ interface BookRepository: JpaRepository<Book, Long> {
     @Query("FROM books ORDER BY title")
     fun getAll(): List<Book>
 
+    fun getById(id: Long): Book
+
     fun save(book: Book): Long
 
     fun getAllByAuthorId(authorId: Long): List<Book>
