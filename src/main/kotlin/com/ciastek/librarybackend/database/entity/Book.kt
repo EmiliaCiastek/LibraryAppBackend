@@ -7,6 +7,7 @@ data class Book(@Id @GeneratedValue(strategy = GenerationType.AUTO)
                 val id: Long? = -1L,
                 val title: String = "",
                 val authorId: Long = 0L,
-                val rating: Double? = null,
+                @OneToMany(mappedBy = "book", cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
+                var ratings: List<BookRate> = emptyList(),
                 val coverUrl: String? = "",
-                @Column(columnDefinition="TEXT") val description: String? = "")
+                @Column(columnDefinition = "TEXT") val description: String? = "")

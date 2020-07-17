@@ -1,5 +1,6 @@
 package com.ciastek.librarybackend
 
+import com.ciastek.librarybackend.database.entity.BookRate
 import com.ciastek.librarybackend.database.entity.Author as AuthorEntity
 import com.ciastek.librarybackend.model.Author
 import com.ciastek.librarybackend.model.Book
@@ -17,7 +18,8 @@ internal fun BookEntity.mapToViewModel(author: AuthorEntity?): Book {
 internal fun BookEntity.mapToDetailedViewModel(author: AuthorEntity?): DetailedBook {
     val authorName = if (author != null) "${author.name} ${author.lastName}" else ""
 
-    return DetailedBook(id = id, title = title, author = authorName, rating = rating ?: 0.0, coverUrl = coverUrl ?: "", description = description ?: "")
+    return DetailedBook(id = id, title = title, author = authorName, rating = ratings.average(), coverUrl = coverUrl
+            ?: "", description = description ?: "")
 }
 
 internal fun Book.mapToEntity() =
@@ -35,3 +37,8 @@ internal fun AuthorEntity?.mapToDetailedViewModel(books: List<Book>) =
 
 internal fun AuthorEntity.mapToViewModel(numberOfBooks: Int) =
         Author(id = id, name = name, lastName = lastName, numberOfBooks = numberOfBooks, photoUrl = photoUrl)
+
+internal fun List<BookRate>.average() =
+        if (isNotEmpty())
+            map { it.rate }.average()
+        else 0.0
