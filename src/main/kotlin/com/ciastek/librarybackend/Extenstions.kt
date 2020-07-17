@@ -19,11 +19,11 @@ internal fun BookEntity.mapToDetailedViewModel(author: AuthorEntity?): DetailedB
     val authorName = if (author != null) "${author.name} ${author.lastName}" else ""
 
     return DetailedBook(id = id, title = title, author = authorName, rating = ratings.average(), coverUrl = coverUrl
-            ?: "", description = description ?: "")
+            ?: "", description = description ?: "", authorId = author!!.id!!)
 }
 
-internal fun Book.mapToEntity() =
-        BookEntity(id = id, title = title, authorId = authorId)
+internal fun DetailedBook.mapToEntity() =
+        BookEntity(id = id, title = title, authorId = authorId, ratings = emptyList(), coverUrl = coverUrl, description = description)
 
 internal fun Author.mapToEntity() =
         AuthorEntity(id = id, name = name, lastName = lastName)

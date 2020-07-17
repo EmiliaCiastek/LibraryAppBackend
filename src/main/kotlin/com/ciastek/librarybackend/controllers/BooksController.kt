@@ -31,11 +31,8 @@ class BooksController @Autowired constructor(private val bookRepository: BookRep
         return book.mapToDetailedViewModel(authorRepository.getAuthorById(book.authorId))
     }
 
-
     @RequestMapping(method = [RequestMethod.POST])
-    fun addBook(@RequestBody book: Book): Book =
-            book.apply {
-                id = bookRepository.save(book.mapToEntity())
-            }
-
+    fun addBook(@RequestBody book: DetailedBook): DetailedBook =
+                        bookRepository.save(book.mapToEntity())
+                                .mapToDetailedViewModel(authorRepository.getAuthorById(book.authorId))
 }

@@ -9,7 +9,6 @@ values
 
 insert into authors (id, name, last_name, birth_date, death_date, website, genres, photo_url, description)
 values
-
                 (0, 'Svetlana', 'Isakova', '', '', '', '', '', ''),
                 (1, 'John Ferguson', 'Smart', '', '', '', '', '', ''),
                 (2, 'Robert C.', 'Martin', '', '', '', '', '', ''),

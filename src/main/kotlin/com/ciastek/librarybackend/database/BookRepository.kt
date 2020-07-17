@@ -14,7 +14,7 @@ interface BookRepository: JpaRepository<Book, Long> {
 
     fun getById(id: Long): Book
 
-    fun save(book: Book): Long
+    fun save(book: Book): Book
 
     fun getAllByAuthorId(authorId: Long): List<Book>
 
