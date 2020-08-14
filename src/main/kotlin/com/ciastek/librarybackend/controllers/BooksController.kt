@@ -35,4 +35,9 @@ class BooksController @Autowired constructor(private val bookRepository: BookRep
     fun addBook(@RequestBody book: DetailedBook): DetailedBook =
                         bookRepository.save(book.mapToEntity())
                                 .mapToDetailedViewModel(authorRepository.getAuthorById(book.authorId))
+
+    @RequestMapping("/{id}", method=[RequestMethod.DELETE])
+    fun deleteBook(@PathVariable("id") id: Long) {
+        bookRepository.deleteById(id)
+    }
 }
